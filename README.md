@@ -10,6 +10,7 @@
 - Write bash code as idiomatically as possible
 - Attempt to find the "Plex Media Server" directory that contains Preferences.xml efficiently
 - Attempt to support all Synology NAS architectures
+- Support Ansible automation
 
 ## Usage
 
@@ -26,6 +27,20 @@ Then, create a Scheduled Task with a User-defined script in the Synology DSM Con
 - Ensure the Run command is `/path/to/update-plex.sh`
 - Add the `--plex-pass` option (eg. `/path/to/update-plex.sh --plex-pass`) if you have Plex Pass and want to enable early access / beta releases
 
+## Use Ansible instead
+Ansible is a powerful automation tool which allows you to perform repetitive tasks easily.
+
+To use Ansible: 
+
+- Clone this repository on your ansible machine
+- Modify the inventory file to match your environment (`/inventory/hosts.ini`)
+- Run the following command: 
+    ```
+    ansible-playbook playbooks/update-plex.yml -i inventory/hosts.ini
+    ```
+
+> It is recommended to use a password vault, ansible-vault or AWX/Tower credential vault to encrypt password so it is not stored in clear text in the inventory file
+
 ## Notes
 
 [issue]: https://github.com/cowboy/synology-update-plex/issues
@@ -33,7 +48,7 @@ Then, create a Scheduled Task with a User-defined script in the Synology DSM Con
 
 - Be careful when SSHing into your NAS. I'm not responsible if you break anything!
 - This script may contain bugs. I'm not responsible if it breaks anything!
-- This script has been tested on a Synology DS918+ NAS. It should work with other Synology NAS models.
+- This script has been tested on a Synology DS918+ & DS216J NAS. It should work with other Synology NAS models.
 - If you find a bug, please [file an issue][issue] or [create a pull request][pr]. Explain the situation and include all script output.
 - If the script outputs `Unable to find "Plex Media Server" directory` when `--plex-pass` is specified, you may need to manually change `/volume*` in the script to your volume's root path.
 - This assumes Plex was installed manually from https://www.plex.tv/media-server-downloads/.

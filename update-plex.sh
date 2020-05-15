@@ -156,7 +156,7 @@ fi
 available_version=$(jq -r .nas.Synology.version <<< "$downloads_json")
 echo "Available version: $available_version"
 
-installed_version=$(synopkg version 'Plex Media Server')
+installed_version=$(/usr/syno/bin/synopkg version 'Plex Media Server')
 echo "Installed version: $installed_version"
 
 # https://stackoverflow.com/a/4024263
@@ -230,9 +230,9 @@ fi
 echo "Checksum valid!"
 
 header 'Installing package'
-synopkg install $package_file
+/usr/syno/bin/synopkg install $package_file
 
 header 'Restarting Plex Media Server'
-synopkg start 'Plex Media Server'
+/usr/syno/bin/synopkg start 'Plex Media Server'
 
 notify PlexUpdateInstalled
