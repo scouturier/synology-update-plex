@@ -1,0 +1,19 @@
+---
+- name: Synology - Update Plex 
+  hosts: synology
+  gather_facts: true
+  become: true
+
+  tasks:
+
+  - name: Updating Plex (with Plex Pass)
+    when: plex_pass|bool == True
+    script: ../update-plex.sh --plex-pass
+    register: output
+    changed_when: '"Plex is up-to-date." not in output.stdout'
+
+  - name: Updating Plex (without Plex Pass)
+    when: plex_pass|bool == False
+    script: ../update-plex.sh
+    register: output
+    changed_when: '"Plex is up-to-date." not in output.stdout'
