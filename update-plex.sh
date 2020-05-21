@@ -67,7 +67,7 @@ function cleanup() {
 trap cleanup EXIT
 
 function notify() {
-  synonotify $1 '{"%PLEX_VERSION%":"'${available_version:-(unknown)}'"}'
+  /usr/syno/bin/synonotify $1 '{"%PLEX_VERSION%":"'${available_version:-(unknown)}'"}'
 }
 
 function init_notifications() {
